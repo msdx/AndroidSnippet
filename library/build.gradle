@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
 }
 
+// 要在Android Studio中运行的话，可能需要注释下面这一行脚本。
 apply from: 'https://raw.githubusercontent.com/msdx/gradle-publish/master/bintray.gradle'
