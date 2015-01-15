@@ -2,7 +2,7 @@
  * Date: 14-7-28
  * Project: Access-Control-V2
  */
-package com.githang.android.snippet.ui;
+package com.githang.android.snippet.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 静态的ViewPager,不能左右滑动的ViewPager.
+ * 静态的ViewPager,不能通过左右滑动的ViewPager.
  * Author: msdx (645079761@qq.com)
  * Time: 14-7-28 上午10:20
  */

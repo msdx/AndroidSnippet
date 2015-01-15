@@ -2,7 +2,7 @@
  * Date: 14-9-2
  * Project: Access-Control-V2
  */
-package com.githang.android.snippet.ui;
+package com.githang.android.snippet.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

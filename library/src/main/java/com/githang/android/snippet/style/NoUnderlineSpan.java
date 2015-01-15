@@ -2,7 +2,7 @@
  * Date: 14-9-4
  * Project: Access-Control-V2
  */
-package com.githang.android.snippet.ui;
+package com.githang.android.snippet.style;
 
 import android.text.TextPaint;
 import android.text.style.UnderlineSpan;

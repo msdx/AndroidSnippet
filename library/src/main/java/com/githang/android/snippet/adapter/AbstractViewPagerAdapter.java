@@ -2,7 +2,7 @@
  * Date: 14-8-18
  * Project: Access-Control-V2
  */
-package com.githang.android.snippet.ui;
+package com.githang.android.snippet.adapter;
 
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;

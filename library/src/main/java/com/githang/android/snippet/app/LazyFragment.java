@@ -2,7 +2,7 @@
  * Date: 14-7-17
  * Project: Access-Control-V2
  */
-package com.githang.android.snippet.ui;
+package com.githang.android.snippet.app;
 
 import android.support.v4.app.Fragment;
 

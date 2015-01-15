@@ -2,7 +2,7 @@
  * Date: 14-6-13
  * Project: Parking Lay-by
  */
-package com.githang.android.snippet.ui;
+package com.githang.android.snippet.widget;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
