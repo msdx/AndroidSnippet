@@ -1,6 +1,7 @@
 # Android Snippet
-
 Some code snippet for android.
+
+[ ![Download](https://api.bintray.com/packages/msdx/maven/AndroidSnippet/images/download.svg) ](https://bintray.com/msdx/maven/AndroidSnippet/_latestVersion)
 
 #Usage
 
