@@ -1,46 +1,10 @@
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'idea'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
 
-version=PROJ_VERSION
-group=PROJ_GROUP
+version = PROJ_VERSION
+group = PROJ_GROUP
 project.archivesBaseName = PROJ_ARTIFACTID
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                artifactId PROJ_ARTIFACTID
-
-                packaging 'aar'
-
-                name PROJ_DESCRIPTION
-                url PROJ_WEBSITEURL
-
-                // Set your license
-                licenses {
-                    license {
-                        name LICENSE_NAME
-                        url LICENSE_URL
-                    }
-                }
-                developers {
-                    developer {
-                        id DEVELOPER_ID
-                        name DEVELOPER_NAME
-                        email DEVELOPER_EMAIL
-                    }
-                }
-                scm {
-                    connection PROJ_VCSURL
-                    developerConnection PROJ_VCSURL
-                    url PROJ_WEBSITEURL
-
-                }
-            }
-        }
-    }
-}
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -56,9 +20,44 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 artifacts {
     archives javadocJar
     archives sourcesJar
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id DEVELOPER_ID
+            name DEVELOPER_NAME
+            email DEVELOPER_EMAIL
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId PROJ_ARTIFACTID
+
+            pom{
+                packaging 'aar'
+            }
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', PROJ_DESCRIPTION)
+                root.children().last() + pomConfig
+            }
+        }
+    }
 }
 
 bintray {
@@ -66,6 +65,7 @@ bintray {
     key = BINTRAY_KEY
 
     configurations = ['archives']
+    publications = ['mavenJava']
     pkg {
         repo = "maven"
         name = PROJ_NAME
