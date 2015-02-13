@@ -70,5 +70,6 @@ public abstract class AbstractViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(mViews.get(position));
+        mViews.remove(position);
     }
 }
