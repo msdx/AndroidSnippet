@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 抽象的PagerAdapter实现类,封装了内容为View的公共操作.
- * Author: msdx (645079761@qq.com)
+ * 抽象的PagerAdapter实现类,封装了内容为View的公共操作.它会对view进行缓存。
+ * Author: Haohang Huang (645079761@qq.com)
  * Time: 14-8-18 下午2:34
  */
 public abstract class AbstractViewPagerAdapter extends PagerAdapter {
@@ -61,7 +61,7 @@ public abstract class AbstractViewPagerAdapter extends PagerAdapter {
      *
      * @param view     旧的view.
      * @param position 位置.
-     * @return 新的view, 并替换旧的view.
+     * @return 返回新的view, 它将替换旧的view.
      */
     public View updateView(View view, int position) {
         return view;
