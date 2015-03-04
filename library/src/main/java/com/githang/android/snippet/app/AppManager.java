@@ -1,4 +1,4 @@
-package com.githang.android.snippet.util;
+package com.githang.android.snippet.app;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -13,7 +13,6 @@ import java.util.Stack;
  *
  * @author liux (http://my.oschina.net/liux)
  * @version 1.0
- * @created 2012-3-21
  */
 public class AppManager {
     private static final String LOG_TAG = AppManager.class.getSimpleName();
