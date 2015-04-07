@@ -85,14 +85,16 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
             return (T) view;
         }
 
-        public void setText(int id, String text) {
+        public TextView holdText(int id, String text) {
             TextView textView = hold(id);
             textView.setText(text);
+            return textView;
         }
 
-        public void setChecked(int id, boolean checked) {
+        public Checkable holdCheckable(int id, boolean checked) {
             Checkable button = hold(id);
             button.setChecked(checked);
+            return button;
         }
     }
 }
