@@ -15,6 +15,7 @@ import static android.provider.ContactsContract.Intents.Insert;
  * 插入联系人
  *
  * @author Haohang Huang (645079761@qq.com)
+ * @version 0.3.1
  */
 public class InsertContact {
     private Intent mIntent;

@@ -8,8 +8,8 @@ import android.content.Context;
 
 /**
  * 与View有关的工具类.
- * Author: msdx (645079761@qq.com)
- * Time: 14-8-18 上午11:42
+ * @author haohang msdx.android@qq.com
+ * @version 0.1
  */
 public class ViewUtil {
     /**

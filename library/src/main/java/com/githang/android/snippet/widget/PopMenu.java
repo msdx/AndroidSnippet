@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 /**
  * 对弹出菜单的封装.
- * Author: msdx (645079761@qq.com)
- * Time: 14-6-13 下午1:51
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.1
  */
 public abstract class PopMenu {
     /**

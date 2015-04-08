@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 /**
  * 宽度适配内容的ListView.
- * Author: msdx (645079761@qq.com)
- * Time: 14-9-2 下午5:14
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.1
  */
 public class WrapWidthListView extends ListView {
 

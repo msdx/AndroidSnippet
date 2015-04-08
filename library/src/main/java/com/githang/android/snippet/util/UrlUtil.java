@@ -9,7 +9,8 @@ import java.util.Locale;
 
 /**
  * URL工具
- * @author Haohang Huang (645079761@qq.com)
+ * @author HaohangHuang (msdx.android@qq.com)
+ * @author 0.3.1
  */
 public class UrlUtil {
     /**

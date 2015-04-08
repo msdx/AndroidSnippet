@@ -8,8 +8,8 @@ import java.util.List;
 
 /**
  * 抽象的PagerAdapter实现类,封装了内容为View,数据为List类型的适配器实现.
- * Author: msdx (645079761@qq.com)
- * Time: 14-8-18 下午2:34
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.1
  */
 public abstract class AbstractPagerListAdapter<T> extends AbstractViewPagerAdapter {
     protected List<T> mData;

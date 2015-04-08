@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 /**
  * 字体自适应大小的TextView.
- * Author: msdx (645079761@qq.com)
- * Time: 15-2-3 下午12:21
  * Copy from :http://stackoverflow.com/questions/2617266/how-to-adjust-text-font-size-to-fit-textview
  * <br/>
  * Modified by Haohang Huang.
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.3
  */
 public class FontFitTextView extends TextView {
     //Attributes

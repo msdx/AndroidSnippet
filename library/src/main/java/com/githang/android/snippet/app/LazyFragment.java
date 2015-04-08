@@ -8,8 +8,8 @@ import android.support.v4.app.Fragment;
 
 /**
  * 懒加载的Fragment.它只在显示时才调用其中的lazyLoad()方法.
- * Author: msdx (645079761@qq.com)
- * Time: 14-7-17 下午5:46
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.1
  */
 public abstract class LazyFragment extends Fragment {
     protected boolean isVisible;

@@ -9,8 +9,8 @@ import android.text.style.UnderlineSpan;
 
 /**
  * 无下划线的Span
- * Author: msdx (645079761@qq.com)
- * Time: 14-9-4 上午10:43
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.1
  */
 public class NoUnderlineSpan extends UnderlineSpan {
 

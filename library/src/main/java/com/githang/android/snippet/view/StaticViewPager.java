@@ -11,8 +11,8 @@ import android.view.MotionEvent;
 
 /**
  * 静态的ViewPager,不能通过左右滑动的ViewPager.
- * Author: msdx (645079761@qq.com)
- * Time: 14-7-28 上午10:20
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.1
  */
 public class StaticViewPager extends ViewPager {
     public StaticViewPager(Context context) {

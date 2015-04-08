@@ -4,11 +4,6 @@
  */
 package com.githang.android.snippet.widget;
 
-/**
- * Author: msdx (645079761@qq.com)
- * Time: 15-1-15 下午2:37
- */
-
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.widget.Scroller;
@@ -17,6 +12,9 @@ import java.lang.reflect.Field;
 
 /**
  * 用于处理ViewPager的滑动速度.
+ *
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.2
  */
 public class FixedSpeedScroller extends Scroller {
 

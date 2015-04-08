@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 /**
  * 抽象的PagerAdapter实现类,封装了内容为View的公共操作.它会对view进行缓存。
- * Author: Haohang Huang (645079761@qq.com)
- * Time: 14-8-18 下午2:34
+ * @author HaohangHuang msdx.android@qq.com
+ * @version 0.1
  */
 public abstract class AbstractViewPagerAdapter extends PagerAdapter {
     protected SparseArray<View> mViews;

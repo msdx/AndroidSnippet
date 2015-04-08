@@ -1,13 +1,9 @@
-/*
- * Date: 14-7-18
- * Project: Access-Control-V2
- */
 package com.githang.android.snippet.util;
 
 /**
  * 文件名工具.
- * Author: msdx (645079761@qq.com)
- * Time: 14-7-18 上午10:37
+ * @author huanghaohang msdx.android@qq.com
+ * @version 0.1
  */
 public class FileNameUtil {
 
