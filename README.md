@@ -20,7 +20,11 @@ Then add a compile-time dependency on this library, adding the `dependencies` se
 
 #Release Note
 
-##0.3.1
+**Changes about next version
+- Modify BaseListAdapter: setText(String) -> holdText(String); setCheckable(boolean) -> holdCheckable(boolean);
+- Modify AppManager: addActivity(Activity) -> add(Activity); 0 -> remove(Activity activity);
+
+**0.3.1
 - Add BaseListAdapter.
 - Add UrlUtil.
 - Add InsertContact.

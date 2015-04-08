@@ -12,7 +12,8 @@ import java.util.Stack;
  * 应用程序Activity管理类：用于Activity管理和应用程序退出
  *
  * @author liux (http://my.oschina.net/liux)
- * @version 1.0
+ * @since 0.1
+ * @version 0.3.2
  */
 public class AppManager {
     private static final String LOG_TAG = AppManager.class.getSimpleName();
@@ -20,9 +21,18 @@ public class AppManager {
 
     /**
      * 添加Activity到堆栈
+     * @param activity    要添加进入的Activity
      */
-    public static void addActivity(Activity activity) {
+    public static void add(Activity activity) {
         activityStack.push(activity);
+    }
+
+    /**
+     * 从堆栈中移除指定的Activity
+     * @param activity 要移除的Activity
+     */
+    public static void remove(Activity activity) {
+        activityStack.remove(activity);
     }
 
     /**
