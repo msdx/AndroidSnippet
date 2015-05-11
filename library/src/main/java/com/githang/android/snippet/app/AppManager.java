@@ -3,6 +3,7 @@ package com.githang.android.snippet.app;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Stack;
 /**
  * 应用程序Activity管理类：用于Activity管理和应用程序退出
  *
- * @author liux (http://my.oschina.net/liux)
+ * @author HaohangHuang (msdx.android@qq.com)
  * @since 0.1
  * @version 0.3.2
  */
@@ -101,5 +102,16 @@ public class AppManager {
         } catch (Exception e) {
             Log.w(LOG_TAG, e);
         }
+    }
+    /**
+     * 启动界面
+     * @param context Context对象
+     * @param clazz Activity的Class对象
+     * @param flag Intent标志
+     */
+    public static void start(Context context, Class<? extends Activity> clazz, int flag) {
+        Intent intent = new Intent(context, clazz);
+        intent.addFlags(flag);
+        context.startActivity(intent);
     }
 }

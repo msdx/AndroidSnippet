@@ -34,6 +34,8 @@ public class WrapHeightViewPager extends ViewPager {
             if (h > height) height = h;
         }
 
+        height += getPaddingTop() + getPaddingBottom();
+
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
