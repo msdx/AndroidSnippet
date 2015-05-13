@@ -12,7 +12,8 @@ import android.view.View;
 /**
  * 高度适配内容的ViewPager.
  * @author HaohangHuang msdx.android@qq.com
- * @version 0.1
+ * @since 0.1
+ * @version 0.4
  */
 public class WrapHeightViewPager extends ViewPager {
     public WrapHeightViewPager(Context context) {

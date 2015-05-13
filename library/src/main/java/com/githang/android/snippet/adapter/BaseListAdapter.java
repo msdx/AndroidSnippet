@@ -18,7 +18,7 @@ import java.util.List;
  * 进行简单封装的列表适配器
  *
  * @author HaohangHuang msdx.android@qq.com
- * @version 0.3.1
+ * @version 0.4
  */
 public abstract class BaseListAdapter<T> extends BaseAdapter {
     private Context mContext;

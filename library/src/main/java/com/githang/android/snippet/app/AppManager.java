@@ -14,7 +14,7 @@ import java.util.Stack;
  *
  * @author HaohangHuang (msdx.android@qq.com)
  * @since 0.1
- * @version 0.3.2
+ * @version 0.4
  */
 public class AppManager {
     private static final String LOG_TAG = AppManager.class.getSimpleName();
