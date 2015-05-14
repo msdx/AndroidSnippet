@@ -17,7 +17,8 @@ Then add a compile-time dependency on this library, adding the `dependencies` se
         compile 'com.githang:androidsnippet:0.3.1'
     }
 
-
+JavaDoc: [http://msdx.github.io/AndroidSnippet/](http://msdx.github.io/AndroidSnippet/)
+    
 #Release Note
 
 **Changes about next version**
