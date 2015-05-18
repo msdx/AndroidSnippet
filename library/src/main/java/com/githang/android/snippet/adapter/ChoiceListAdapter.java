@@ -100,6 +100,7 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
             mCheckView = (Checkable) findViewById(choiceId);
             ((View) mCheckView).setFocusable(false);
             ((View) mCheckView).setFocusableInTouchMode(false);
+            ((View) mCheckView).setClickable(false);
         }
 
         /**
