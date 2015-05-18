@@ -31,4 +31,4 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
 }
 
-apply from: 'https://raw.githubusercontent.com/msdx/gradle-publish/master/bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/msdx/gradle-publish/mine/bintray.gradle'
