@@ -14,14 +14,14 @@ Make sure you declare the JCenter repository in your project's `build.gradle`:
 Then add a compile-time dependency on this library, adding the `dependencies` section to `build.gradle` if it doesn't already exist:
 
     dependencies {
-        compile 'com.githang:androidsnippet:0.3.1'
+        compile 'com.githang:androidsnippet:0.4'
     }
 
 JavaDoc: [http://msdx.github.io/AndroidSnippet/](http://msdx.github.io/AndroidSnippet/)
     
 #Release Note
 
-**Changes about next version**
+**0.4**
 - Modify BaseListAdapter:
  - setText(String) -> holdText(String);
  - setCheckable(boolean) -> holdCheckable(boolean);
