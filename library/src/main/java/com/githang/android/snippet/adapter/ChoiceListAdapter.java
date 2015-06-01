@@ -20,15 +20,15 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
     private Context mContext;
     private List<T> mData;
     private int mLayoutId;
-    private int mChoiceId;
+    private int[] mChoiceId;
 
     /**
      * @param context
      * @param layoutId item 的布局id.
-     * @param data 数据源
+     * @param data     数据源
      * @param choiceId 选择控件的id
      */
-    public ChoiceListAdapter(Context context, int layoutId, List<T> data, int choiceId) {
+    public ChoiceListAdapter(Context context, int layoutId, List<T> data, int... choiceId) {
         mContext = context;
         mData = data;
         mLayoutId = layoutId;
@@ -66,12 +66,14 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
 
     /**
      * 持有item的子view。在该方法内调用ChoiceView的hold方法，把子view添加进去。
+     *
      * @param view ChoiceView
      */
     protected abstract void holdView(ChoiceLayout view);
 
     /**
      * 绑定数据
+     *
      * @param view
      * @param position
      * @param data
@@ -82,8 +84,9 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
      * 绑定Checkable控件的Layout.
      */
     public static class ChoiceLayout extends FrameLayout implements Checkable {
-        private Checkable mCheckView;
+        private Checkable[] mCheckViews;
         private SparseArray<View> mHolderViews;
+        private boolean isChecked;
 
         protected ChoiceLayout(Context context) {
             super(context);
@@ -92,19 +95,26 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
 
         /**
          * 设置item的布局及Checkable控件的id。
+         *
          * @param layoutId 布局id
          * @param choiceId Checkable控件id
          */
-        protected void setLayoutAndChoiceId(int layoutId, int choiceId) {
+        protected void setLayoutAndChoiceId(int layoutId, int... choiceId) {
             View.inflate(getContext(), layoutId, this);
-            mCheckView = (Checkable) findViewById(choiceId);
-            ((View) mCheckView).setFocusable(false);
-            ((View) mCheckView).setFocusableInTouchMode(false);
-            ((View) mCheckView).setClickable(false);
+            mCheckViews = new Checkable[choiceId.length];
+            for (int i = 0; i < choiceId.length; i++) {
+                View checkedView = findViewById(choiceId[i]);
+                checkedView.setFocusable(false);
+                checkedView.setFocusableInTouchMode(false);
+                checkedView.setClickable(false);
+                mHolderViews.put(choiceId[i], checkedView);
+                mCheckViews[i] = (Checkable) checkedView;
+            }
         }
 
         /**
          * 持有子view
+         *
          * @param id
          */
         public void hold(int id) {
@@ -113,6 +123,7 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
 
         /**
          * 获取子view。
+         *
          * @param id
          * @param <D>
          * @return
@@ -123,17 +134,20 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
 
         @Override
         public void setChecked(boolean checked) {
-            mCheckView.setChecked(checked);
+            for (Checkable checkable : mCheckViews) {
+                checkable.setChecked(checked);
+            }
+            isChecked = checked;
         }
 
         @Override
         public boolean isChecked() {
-            return mCheckView.isChecked();
+            return isChecked;
         }
 
         @Override
         public void toggle() {
-            mCheckView.toggle();
+            setChecked(!isChecked);
         }
     }
 }
