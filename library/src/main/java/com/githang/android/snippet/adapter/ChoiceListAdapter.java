@@ -86,7 +86,11 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
     public static class ChoiceLayout extends FrameLayout implements Checkable {
         private Checkable[] mCheckViews;
         private SparseArray<View> mHolderViews;
-        private boolean isChecked;
+        private boolean mChecked;
+        /**
+         * 是否强制设为选中状态
+         */
+        private boolean mForceChecked;
 
         protected ChoiceLayout(Context context) {
             super(context);
@@ -125,29 +129,48 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
          * 获取子view。
          *
          * @param id
-         * @param <D>
-         * @return
+         * @param <V>
+         * @return 返回指定的id对应的view。
          */
-        public <D> D get(int id) {
-            return (D) mHolderViews.get(id);
+        public <V> V get(int id) {
+            return (V) mHolderViews.get(id);
         }
 
         @Override
         public void setChecked(boolean checked) {
+            checked |= mForceChecked;
             for (Checkable checkable : mCheckViews) {
                 checkable.setChecked(checked);
             }
-            isChecked = checked;
+            mChecked = checked;
         }
 
         @Override
         public boolean isChecked() {
-            return isChecked;
+            return mChecked;
+        }
+
+        /**
+         * 是否为强制选中状态。
+         *
+         * @return 如果是强制选中状态返回true，否则返回false。
+         */
+        public boolean isForceChecked() {
+            return mForceChecked;
+        }
+
+        /**
+         * 设置是否强制选中状态。
+         *
+         * @param forceChecked 是否强制选中状态。
+         */
+        public void setForceChecked(boolean forceChecked) {
+            mForceChecked = forceChecked;
         }
 
         @Override
         public void toggle() {
-            setChecked(!isChecked);
+            setChecked(mForceChecked | !mChecked);
         }
     }
 }
