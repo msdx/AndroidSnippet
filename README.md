@@ -14,7 +14,7 @@ Make sure you declare the JCenter repository in your project's `build.gradle`:
 Then add a compile-time dependency on this library, adding the `dependencies` section to `build.gradle` if it doesn't already exist:
 
     dependencies {
-        compile 'com.githang:androidsnippet:0.4'
+        compile(group: 'com.githang', name: 'androidsnippet', version: '0.4.1', ext: 'aar', changing: true)
     }
 
 JavaDoc: [http://msdx.github.io/AndroidSnippet/](http://msdx.github.io/AndroidSnippet/)
