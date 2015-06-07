@@ -13,6 +13,10 @@ Make sure you declare the JCenter repository in your project's `build.gradle`:
 
 Then add a compile-time dependency on this library, adding the `dependencies` section to `build.gradle` if it doesn't already exist:
 
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+
     dependencies {
         compile(group: 'com.githang', name: 'androidsnippet', version: '0.4.1', ext: 'aar', changing: true)
     }

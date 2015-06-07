@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,6 +34,17 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
         mData = data;
         mLayoutId = layoutId;
         mChoiceId = choiceId;
+    }
+
+
+    /**
+     * @param context
+     * @param layoutId The layout id if the item view.
+     * @param data     data source
+     * @param choiceId checkable view id
+     */
+    public ChoiceListAdapter(Context context, int layoutId, T[] data, int... choiceId) {
+        this(context, layoutId, Arrays.asList(data), choiceId);
     }
 
     @Override
