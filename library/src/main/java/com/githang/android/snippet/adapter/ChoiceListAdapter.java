@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -146,6 +147,21 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
          */
         public <V> V get(int id) {
             return (V) mHolderViews.get(id);
+        }
+
+        public void setText(int id, int stringId) {
+            TextView textView = get(id);
+            textView.setText(stringId);
+        }
+
+        public void setText(int id, String text) {
+            TextView textView = get(id);
+            textView.setText(text);
+        }
+
+        public void setChecked(int id, boolean checked) {
+            Checkable checkable = get(id);
+            checkable.setChecked(checked);
         }
 
         @Override
