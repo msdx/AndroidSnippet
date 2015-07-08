@@ -27,9 +27,13 @@ import android.widget.ScrollView;
 public class PullScaleScrollView extends ScrollView {
     private static final String TAG = "PullScaleScrollView";
     /**
-     * 阻尼系数,越小阻力就越大.
+     * 默认阻尼系数
      */
-    private static final float SCROLL_RATIO = 0.5f;
+    public static final float DEFAULT_SCROLL_RATIO = 0.5f;
+    /**
+     * 默认最大高度系数
+     */
+    public static final float DEFAULT_MAX_HEIGHT_RADIO = 3f;
 
     /**
      * 滑动至翻转的距离.
@@ -45,13 +49,16 @@ public class PullScaleScrollView extends ScrollView {
      * 回弹效果变化率
      */
     private static final Interpolator INTERPOLATOR = new DecelerateInterpolator(1f);
-
+    /**
+     * 阻尼系数,越小阻力就越大.
+     */
+    private float mScrollRatio = DEFAULT_SCROLL_RATIO;
     /**
      * 头部view.
      */
     private View mHeader;
 
-    private float mMaxHeightMultiple = 3;
+    private float mMaxHeightRatio = DEFAULT_MAX_HEIGHT_RADIO;
     /**
      * 头部view高度.
      */
@@ -159,17 +166,33 @@ public class PullScaleScrollView extends ScrollView {
     /**
      * @return 返回header最大高度相对于初始高度的倍率
      */
-    public float getMaxHeightMultiple() {
-        return mMaxHeightMultiple;
+    public float getMaxHeightRatio() {
+        return mMaxHeightRatio;
     }
 
     /**
-     * 设置header最大高度相对于初始高度的倍率
+     * 设置下拉最大高度的系数
      *
-     * @param maxHeightMultiple
+     * @param maxHeightRatio 设置下拉最大高度的系数
      */
-    public void setMaxHeightMultiple(float maxHeightMultiple) {
-        mMaxHeightMultiple = maxHeightMultiple;
+    public void setMaxHeightRatio(float maxHeightRatio) {
+        mMaxHeightRatio = maxHeightRatio;
+    }
+
+    /**
+     * @return 返回当前的阻尼系数
+     */
+    public float getScrollRatio() {
+        return mScrollRatio;
+    }
+
+    /**
+     * 设置阻尼系数,越小阻力就越大.
+     *
+     * @param scrollRatio 阻尼系数
+     */
+    public void setScrollRatio(float scrollRatio) {
+        mScrollRatio = scrollRatio;
     }
 
     /**
@@ -213,7 +236,7 @@ public class PullScaleScrollView extends ScrollView {
                     mStartPoint.set(ev.getX(), ev.getY());
                     if (mHeaderWidth == 0) {
                         mHeaderHeight = mHeader.getMeasuredHeight();
-                        mHeaderMaxHeight = (int) (mHeaderHeight * mMaxHeightMultiple);
+                        mHeaderMaxHeight = (int) (mHeaderHeight * mMaxHeightRatio);
                         mHeaderWidth = mHeader.getMeasuredWidth();
                     }
                     return super.onTouchEvent(ev);
@@ -307,8 +330,8 @@ public class PullScaleScrollView extends ScrollView {
                         mContentView.getBottom());
             }
 
-            // 计算移动距离(手势移动的距离*阻尼系数*0.5)
-            float moveHeight = deltaY * 0.5f * SCROLL_RATIO;
+            // 计算移动距离(手势移动的距离*阻尼系数)
+            float moveHeight = deltaY * mScrollRatio;
             mCurrentHeight = (int) (mHeaderHeight + moveHeight);
 
             // 修正content移动的距离，避免超过header的底边缘
@@ -373,6 +396,6 @@ public class PullScaleScrollView extends ScrollView {
         /**
          * 翻转回调方法
          */
-        public void onTurn();
+        void onTurn();
     }
 }
