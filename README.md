@@ -9,21 +9,26 @@ Make sure you declare the JCenter repository in your project's `build.gradle`:
 
     repositories {
         jcenter()
+        maven { url "http://oss.jfrog.org/oss-snapshot-local/" } /// if you use snapshot version
+
     }
 
 Then add a compile-time dependency on this library, adding the `dependencies` section to `build.gradle` if it doesn't already exist:
 
-    configurations.all {
-        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-    }
-
     dependencies {
-        compile(group: 'com.githang', name: 'androidsnippet', version: '0.4.1', ext: 'aar', changing: true)
+        compile 'com.githang:androidsnippet:0.4.1'
+        //compile 'com.githang:androidsnippet:0.5-SNAPSHOT'
     }
 
 JavaDoc: [http://msdx.github.io/AndroidSnippet/](http://msdx.github.io/AndroidSnippet/)
     
 #Release Note
+
+**0.5**
+- Add PullScallScrollView.
+- Add some api about map app.
+- Add some Intents.
+- Add some api to ChoiceListAdapter.
 
 **0.4**
 - Modify BaseListAdapter:
