@@ -7,6 +7,7 @@ package com.githang.android.snippet.widget;
 import android.content.Context;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -151,7 +152,9 @@ public class PullScaleScrollView extends ScrollView {
 
     private void init(Context context, AttributeSet attrs) {
         // set scroll mode
-        setOverScrollMode(OVER_SCROLL_NEVER);
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.GINGERBREAD) {
+            setOverScrollMode(OVER_SCROLL_NEVER);
+        }
     }
 
     /**

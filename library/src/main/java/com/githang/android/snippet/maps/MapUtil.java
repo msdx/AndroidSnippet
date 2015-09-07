@@ -9,10 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.provider.Settings;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,62 +78,4 @@ public class MapUtil {
         }
         return mapApps;
     }
-
-    /**
-     * 调起高德地图进行导航的intent
-     * @param pkgName 调起的APP的包名
-     * @param latitude 纬度
-     * @param longitude 经度
-     * @param name 地点名称
-     * @param coordType 经纬坐标系类型
-     * @return 返回可以调起高德地图进行导航的intent
-     */
-    public static Intent getGaodeIntent(String pkgName, double latitude, double longitude, String name, String coordType) {
-        final String dev;
-        if(MapUtil.COORD_WGS84.equals(coordType)) {
-            dev = "1";
-        } else if(MapUtil.COORD_GCJ02.equals(coordType)) {
-            dev = "0";
-        } else {
-            throw new IllegalArgumentException("高德地图调用暂仅支持原始坐标及火星坐标");
-        }
-        Intent gaodeIntent = new Intent(Intent.ACTION_VIEW);
-        gaodeIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        StringBuilder sb = new StringBuilder();
-        sb.append("androidamap://navi?sourceApplication=").append(pkgName)
-                .append("&lat=").append(latitude)
-                .append("&lon=").append(longitude).append("&dev=").append(dev)
-                .append("&poiname=").append(name).append("&style=0");
-        gaodeIntent.setData(Uri.parse(sb.toString()));
-        gaodeIntent.setPackage("com.autonavi.minimap");
-        return gaodeIntent;
-    }
-
-    /**
-     * 调起百度地图进行导航的intent
-     * @param pkgName 调起的APP的包名
-     * @param latitude 纬度
-     * @param longitude 经度
-     * @param name 地点名称
-     * @param coordType 经纬坐标系类型
-     * @return 返回可以调起百度地图进行导航的intent
-     */
-    public static Intent getBaiduIntent(String pkgName, double latitude, double longitude, String name, String coordType) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("intent://map/direction?")
-                .append("destination=")
-                .append("latlng:").append(latitude).append(",").append(longitude)
-                .append("|name:").append(name)
-                .append("&mode=driving")
-                .append("&coord_type=").append(coordType)
-                .append("&src=").append(pkgName)
-                .append("#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end");
-        try {
-            return Intent.parseUri(sb.toString(), 0);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 }
