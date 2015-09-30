@@ -18,7 +18,7 @@ import java.util.List;
  * 进行简单封装的列表适配器
  *
  * @author HaohangHuang msdx.android@qq.com
- * @version 0.4
+ * @version 0.5
  */
 public abstract class BaseListAdapter<T> extends BaseAdapter {
     private Context mContext;
@@ -52,13 +52,16 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         if (convertView == null) {
             convertView = View.inflate(mContext, mViewLayoutId, null);
             holder = new Holder(convertView);
+            holdView(convertView, holder);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
-        setViews(position, holder);
+        bindData(position, holder, getItem(position));
         return convertView;
     }
+
+    protected abstract void holdView(View parent, Holder holder);
 
     /**
      * 设置列表里的视图内容
@@ -66,7 +69,13 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
      * @param position 在列表中的位置
      * @param holder   该位置对应的视图
      */
-    protected abstract void setViews(int position, Holder holder);
+    protected abstract void bindData(int position, Holder holder, T data);
+
+    public void update(List<T> data) {
+        mData.clear();
+        mData.addAll(data);
+        notifyDataSetChanged();
+    }
 
     public static class Holder {
         private SparseArray<View> mHolderViews;
@@ -77,23 +86,24 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
             mItem = view;
         }
 
-        public <T> T hold(int resId) {
-            View view = mHolderViews.get(resId);
-            if (view == null) {
-                view = mItem.findViewById(resId);
-                mHolderViews.put(resId, view);
+        public void hold(int... resIds) {
+            for (int id : resIds) {
+                mHolderViews.put(id, mItem.findViewById(id));
             }
-            return (T) view;
+        }
+
+        public <V> V get(int id) {
+            return (V) mHolderViews.get(id);
         }
 
         public TextView holdText(int id, String text) {
-            TextView textView = hold(id);
+            TextView textView = get(id);
             textView.setText(text);
             return textView;
         }
 
         public Checkable holdCheckable(int id, boolean checked) {
-            Checkable button = hold(id);
+            Checkable button = get(id);
             button.setChecked(checked);
             return button;
         }
