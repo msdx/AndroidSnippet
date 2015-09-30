@@ -42,7 +42,7 @@ public class FixedSpeedScroller extends Scroller {
         super.startScroll(startX, startY, dx, dy, mDuration);
     }
 
-    public void setViewPager(ViewPager viewPager) {
+    public void setToViewPager(ViewPager viewPager) {
         try {
             Field mScroller = ViewPager.class.getDeclaredField("mScroller");
             mScroller.setAccessible(true);

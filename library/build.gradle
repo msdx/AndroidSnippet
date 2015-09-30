@@ -32,4 +32,6 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.1'
 }
 
-apply from: 'bintray.gradle'
+if(hasProperty("BINTRAY_USER") && hasProperty("BINTRAY_KEY")) {
+    apply from: 'bintray.gradle'
+}
