@@ -33,7 +33,8 @@ public class AppManager {
     @TargetApi(14)
     public static void enableAutoManage(Application application) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            throw new UnsupportedOperationException("The android os version of this device is unsupported.");
+            Log.w("AppManager",  new UnsupportedOperationException("The android os version of this device is unsupported."));
+            return;
         }
         if (!autoManage) {
             application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
@@ -175,5 +176,13 @@ public class AppManager {
         Intent intent = new Intent(context, clazz);
         intent.addFlags(flag);
         context.startActivity(intent);
+    }
+
+    /**
+     * 返回启动着的Activity的大小
+     * @return
+     */
+    public static int size() {
+        return activityStack.size();
     }
 }
