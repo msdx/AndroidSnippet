@@ -16,7 +16,7 @@ Make sure you declare the JCenter repository in your project's `build.gradle`:
 Then add a compile-time dependency on this library, adding the `dependencies` section to `build.gradle` if it doesn't already exist:
 
     dependencies {
-        compile 'com.githang:androidsnippet:0.4.1'
+        compile 'com.githang:androidsnippet:0.5'
         //compile 'com.githang:androidsnippet:0.5-SNAPSHOT'
     }
 
@@ -25,6 +25,8 @@ JavaDoc: [http://msdx.github.io/AndroidSnippet/](http://msdx.github.io/AndroidSn
 #Release Note
 
 **0.5**
+- Add HttpStatus which copy from org.apache.http.HttpStatus.
+- Add some method to AppManager.
 - Add PullScallScrollView.
 - Add some api about map app.
 - Add some Intents.
