@@ -4,7 +4,7 @@
  */
 package com.githang.android.snippet.adapter;
 
-import android.content.Context;
+import android.support.annotation.IdRes;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +12,31 @@ import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 进行简单封装的列表适配器
  *
  * @author HaohangHuang msdx.android@qq.com
- * @version 0.5
+ * @version 0.6
  */
-public abstract class BaseListAdapter<T> extends BaseAdapter {
-    private Context mContext;
+public class BaseListAdapter<T> extends BaseAdapter {
     private List<T> mData;
-    private int mViewLayoutId;
+    private ItemCreator<T> mItemCreator;
 
-    public BaseListAdapter(Context context, List<T> data, int viewLayoutId) {
-        mContext = context;
+    public BaseListAdapter(ItemCreator<T> creator) {
+        this(new ArrayList<T>(), creator);
+    }
+
+    public BaseListAdapter(List<T> data, ItemCreator<T> creator) {
         mData = data;
-        mViewLayoutId = viewLayoutId;
+        mItemCreator = creator;
     }
 
     @Override
     public int getCount() {
-        return mData.size();
+        return mData == null ? 0 : mData.size();
     }
 
     @Override
@@ -50,26 +53,14 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final Holder holder;
         if (convertView == null) {
-            convertView = View.inflate(mContext, mViewLayoutId, null);
-            holder = new Holder(convertView);
-            holdView(convertView, holder);
-            convertView.setTag(holder);
+            holder = mItemCreator.createHolder(position, parent);
+            convertView = holder.getView();
         } else {
             holder = (Holder) convertView.getTag();
         }
-        bindData(position, holder, getItem(position));
+        mItemCreator.bindData(position, holder, getItem(position));
         return convertView;
     }
-
-    protected abstract void holdView(View parent, Holder holder);
-
-    /**
-     * 设置列表里的视图内容
-     *
-     * @param position 在列表中的位置
-     * @param holder   该位置对应的视图
-     */
-    protected abstract void bindData(int position, Holder holder, T data);
 
     public void update(List<T> data) {
         mData.clear();
@@ -81,9 +72,10 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         private SparseArray<View> mHolderViews;
         private View mItem;
 
-        Holder(View view) {
+        public Holder(View view) {
             mHolderViews = new SparseArray<>();
             mItem = view;
+            mItem.setTag(this);
         }
 
         public void hold(int... resIds) {
@@ -96,16 +88,31 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
             return (V) mHolderViews.get(id);
         }
 
-        public TextView holdText(int id, String text) {
+        public void setText(@IdRes int id, String text) {
             TextView textView = get(id);
             textView.setText(text);
-            return textView;
         }
 
-        public Checkable holdCheckable(int id, boolean checked) {
+        public void setChecked(@IdRes int id, boolean checked) {
             Checkable button = get(id);
             button.setChecked(checked);
-            return button;
         }
+
+        public View getView() {
+            return mItem;
+        }
+    }
+
+    public interface ItemCreator<T> {
+
+        Holder createHolder(int position, ViewGroup parent);
+
+        /**
+         * 设置列表里的视图内容
+         *
+         * @param position 在列表中的位置
+         * @param holder   该位置对应的视图
+         */
+        void bindData(int position, Holder holder, T data);
     }
 }
