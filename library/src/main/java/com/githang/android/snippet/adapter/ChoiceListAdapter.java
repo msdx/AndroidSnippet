@@ -20,7 +20,7 @@ import java.util.List;
  */
 public abstract class ChoiceListAdapter<T> extends BaseAdapter {
     private Context mContext;
-    private List<T> mData;
+    protected List<T> mData;
     private int mLayoutId;
     private int[] mChoiceId;
 
