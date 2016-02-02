@@ -18,9 +18,6 @@ public class TextUtil {
         if (texts.length == 0) {
             return "";
         }
-        if (texts.length == 1) {
-            return texts[0];
-        }
 
         StringBuilder sb = new StringBuilder();
         for (String text : texts) {
