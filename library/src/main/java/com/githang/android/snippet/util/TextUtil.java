@@ -15,13 +15,11 @@ public class TextUtil {
      * @return 返回拼接后的结果。
      */
     public static String concat(String... texts) {
-        if (texts.length == 0) {
-            return "";
-        }
-
         StringBuilder sb = new StringBuilder();
-        for (String text : texts) {
-            if (text != null && text.length() > 0) {
+        final int size = texts.length;
+        for (int i = 0; i < size; i++) {
+            String text = texts[i];
+            if (text != null && text.length() != 0) {
                 sb.append(text);
             }
         }
