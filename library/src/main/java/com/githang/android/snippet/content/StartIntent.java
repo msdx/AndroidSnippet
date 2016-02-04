@@ -8,7 +8,7 @@ import android.os.Parcel;
 /**
  * 可启动的intent。
  *
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author huanghaohang (msdx.android@qq.com)
  * @version 2016-02-04
  * @since 2016-02-04
  */
