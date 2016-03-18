@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Stack;
 
 /**
@@ -23,6 +24,7 @@ import java.util.Stack;
 public class AppManager {
     private static final String LOG_TAG = AppManager.class.getSimpleName();
     private static Stack<Activity> activityStack = new Stack<Activity>();
+    private static LinkedHashMap<Activity, Class<? extends Activity>> stepMap = new LinkedHashMap<>(10, 0.8f, true);
     private static boolean autoManage = false;
 
     /**
@@ -33,7 +35,7 @@ public class AppManager {
     @TargetApi(14)
     public static void enableAutoManage(Application application) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            Log.w("AppManager",  new UnsupportedOperationException("The android os version of this device is unsupported."));
+            Log.w("AppManager", new UnsupportedOperationException("The android os version of this device is unsupported."));
             return;
         }
         if (!autoManage) {
@@ -84,6 +86,7 @@ public class AppManager {
      */
     public static void add(Activity activity) {
         activityStack.push(activity);
+        stepMap.put(activity, activity.getClass());
     }
 
     /**
@@ -93,6 +96,7 @@ public class AppManager {
      */
     public static void remove(Activity activity) {
         activityStack.remove(activity);
+        stepMap.remove(activity);
     }
 
     /**
@@ -103,6 +107,36 @@ public class AppManager {
     }
 
     /**
+     * 是否包含指定类型的Activity
+     *
+     * @param cls 指定的Activity类型
+     * @return 包含返回true, 否则返回false
+     */
+    public static boolean contains(Class<? extends Activity> cls) {
+        return stepMap.values().contains(cls);
+    }
+
+    public static boolean containSteps(Class<? extends Activity>... part) {
+        ArrayList<Class<? extends Activity>> steps = new ArrayList<>(stepMap.values());
+        int subCount = part.length;
+        int count = steps.size();
+        if (subCount > count) {
+            return false;
+        }
+        int end = count - subCount;
+        outLoop:
+        for (int start = 0; start <= end; start++) {
+            for (int index = 0; index < subCount; index++) {
+                if (steps.get(index + start) != (part[index])) {
+                    continue outLoop;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 结束当前Activity（堆栈中最后一个压入的）
      */
     public static void finishCurrentActivity() {
@@ -110,6 +144,7 @@ public class AppManager {
         if (activity != null) {
             activity.finish();
         }
+        stepMap.remove(activity);
     }
 
     /**
@@ -117,7 +152,7 @@ public class AppManager {
      */
     public static void finishActivity(Activity activity) {
         if (activity != null) {
-            activityStack.remove(activity);
+            remove(activity);
             activity.finish();
         }
     }
@@ -134,7 +169,7 @@ public class AppManager {
             }
         }
         for (Activity activity : activities) {
-            activityStack.remove(activity);
+            remove(activity);
         }
     }
 
@@ -148,6 +183,7 @@ public class AppManager {
             }
         }
         activityStack.clear();
+        stepMap.clear();
     }
 
     /**
@@ -180,6 +216,7 @@ public class AppManager {
 
     /**
      * 返回启动着的Activity的大小
+     *
      * @return
      */
     public static int size() {

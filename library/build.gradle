@@ -30,6 +30,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:22.2.1'
+    testCompile 'junit:junit:4.12'
 }
 
 if(hasProperty("BINTRAY_USER") && hasProperty("BINTRAY_KEY")) {
