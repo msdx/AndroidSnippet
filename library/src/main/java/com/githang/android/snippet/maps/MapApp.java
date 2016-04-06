@@ -84,6 +84,15 @@ public enum MapApp {
         return mAppName;
     }
 
+    /**
+     * 调起地图进行导航的intent
+     * @param pkgName 调起的APP的包名
+     * @param latitude 纬度
+     * @param longitude 经度
+     * @param pointName 地点名称
+     * @param coordType 经纬坐标系类型
+     * @return 返回可以调起地图进行导航的intent
+     */
     public Intent getIntent(String pkgName, double latitude, double longitude, String pointName,
                             String coordType) {
         throw new AbstractMethodError("Method no implement");
