@@ -20,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class AppSign {
 
-    public static String getSignSHA1(Context context, String algorithm) {
+    public static String getSignDigest(Context context, String algorithm) {
         PackageManager pm = context.getPackageManager();
         try {
             PackageInfo pi = pm.getPackageInfo(context.getApplicationInfo().packageName, PackageManager.GET_SIGNATURES);
