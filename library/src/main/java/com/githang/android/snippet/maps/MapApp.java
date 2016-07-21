@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
 /**
  * 地图APP枚举类，表示支持的地图软件。
  *
- * @author 黄浩坑 (hanghaohang@parkingwang.com)
+ * @author msdx.android@qq.com
  * @version 2015-03-09
  * @since 1.0
  */

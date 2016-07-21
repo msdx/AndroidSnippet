@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * 计算并缓存签名摘要。
  *
- * @author huanghaohang (msdx.android@qq.com)
+ * @author msdx.android@qq.com
  * @version 2015-06-13
  * @since 2.5
  */

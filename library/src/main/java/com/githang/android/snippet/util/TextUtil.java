@@ -3,7 +3,7 @@ package com.githang.android.snippet.util;
 /**
  * 文本处理工具类
  *
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author msdx.android@qq.com
  * @version 2016-02-02
  * @since 2016-02-02
  */

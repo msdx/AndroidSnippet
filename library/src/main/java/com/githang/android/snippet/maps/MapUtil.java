@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * 地图工具类。
- * @author      黄浩坑 (hanghaohang@parkingwang.com)
+ * @author      msdx.android@qq.com
  * @version     2015-03-09
  * @since       1.0
  */

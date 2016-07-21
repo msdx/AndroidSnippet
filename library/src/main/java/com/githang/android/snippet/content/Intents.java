@@ -7,7 +7,7 @@ import android.provider.Settings;
 /**
  * Intent 工具类。
  *
- * @author huanghaohang (msdx.android@qq.com)
+ * @author msdx.android@qq.com
  * @since 2015-06-18
  */
 public class Intents {

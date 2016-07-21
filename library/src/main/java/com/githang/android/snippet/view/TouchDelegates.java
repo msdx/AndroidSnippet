@@ -8,7 +8,7 @@ import android.view.ViewParent;
 /**
  * 触摸委托工具类。
  *
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author msdx.android@qq.com
  * @version 2016-03-23
  * @since 2016-03-23
  */

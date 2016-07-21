@@ -3,7 +3,7 @@ package com.githang.android.snippet.http;
 /**
  * Copy from org.apache.http.HttpStatus.
  *
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author msdx.android@qq.com
  * @version 2015-10-14
  * @since 2015-10-14
  */

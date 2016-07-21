@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 可选择的ListAdapter.
  *
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author msdx.android@qq.com
  * @version 0.4 15-5-13
  */
 public abstract class ChoiceListAdapter<T> extends BaseAdapter {

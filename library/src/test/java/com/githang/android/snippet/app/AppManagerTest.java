@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 /**
  * FIXME
  *
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author msdx.android@qq.com
  * @version 2016-03-21
  * @since 2016-03-21
  */

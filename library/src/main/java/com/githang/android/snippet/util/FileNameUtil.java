@@ -2,7 +2,7 @@ package com.githang.android.snippet.util;
 
 /**
  * 文件名工具.
- * @author huanghaohang msdx.android@qq.com
+ * @author msdx.android@qq.com
  * @version 0.1
  */
 public class FileNameUtil {
