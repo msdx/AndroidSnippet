@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,34 +16,21 @@ import java.util.List;
  * @author msdx.android@qq.com
  * @version 0.4 15-5-13
  */
-public abstract class ChoiceListAdapter<T> extends BaseAdapter {
-    private Context mContext;
-    protected List<T> mData;
-    private int mLayoutId;
-    private int[] mChoiceId;
+public class ChoiceListAdapter<T, H extends ChoiceListAdapter.AbstractChoiceView> extends BaseAdapter {
+    private List<T> mData;
+    private ItemCreator<T, H> mItemCreator;
 
-    /**
-     * @param context
-     * @param layoutId item 的布局id.
-     * @param data     数据源
-     * @param choiceId 选择控件的id
-     */
-    public ChoiceListAdapter(Context context, int layoutId, List<T> data, int... choiceId) {
-        mContext = context;
-        mData = data;
-        mLayoutId = layoutId;
-        mChoiceId = choiceId;
+    public ChoiceListAdapter(ItemCreator<T, H> creator) {
+        this(null, creator);
     }
 
-
     /**
-     * @param context
-     * @param layoutId The layout id if the item view.
-     * @param data     data source
-     * @param choiceId checkable view id
+     * @param data    数据源
+     * @param creator
      */
-    public ChoiceListAdapter(Context context, int layoutId, T[] data, int... choiceId) {
-        this(context, layoutId, Arrays.asList(data), choiceId);
+    public ChoiceListAdapter(List<T> data, ItemCreator<T, H> creator) {
+        mData = data;
+        mItemCreator = creator;
     }
 
     @Override
@@ -55,7 +40,7 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
 
     @Override
     public T getItem(int position) {
-        return mData == null ? null : mData.get(position);
+        return mData.get(position);
     }
 
     @Override
@@ -65,68 +50,74 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ChoiceLayout view;
+        final H choiceHolderView;
         if (convertView == null) {
-            view = new ChoiceLayout(mContext);
-            view.setLayoutAndChoiceId(mLayoutId, mChoiceId);
-            holdView(view);
+            choiceHolderView = mItemCreator.createHolder(position, parent);
+            convertView = choiceHolderView;
         } else {
-            view = (ChoiceLayout) convertView;
+            choiceHolderView = (H) convertView;
         }
-        bindData(view, position, mData.get(position));
-        return view;
+        mItemCreator.bindData(position, choiceHolderView, mData.get(position));
+        return convertView;
     }
 
-    /**
-     * 持有item的子view。在该方法内调用ChoiceView的hold方法，把子view添加进去。
-     *
-     * @param view ChoiceView
-     */
-    protected abstract void holdView(ChoiceLayout view);
+    public void updateData(List<T> data) {
+        mData = data;
+    }
 
-    /**
-     * 绑定数据
-     *
-     * @param view
-     * @param position
-     * @param data
-     */
-    protected abstract void bindData(ChoiceLayout view, int position, T data);
+    public List<T> getData() {
+        return mData;
+    }
 
     /**
      * 绑定Checkable控件的Layout.
      */
-    public static class ChoiceLayout extends FrameLayout implements Checkable {
+    public static abstract class AbstractChoiceView extends FrameLayout implements Checkable, ItemHolder {
         private Checkable[] mCheckViews;
-        private SparseArray<View> mHolderViews;
         private boolean mChecked;
-        /**
-         * 是否强制设为选中状态
-         */
-        private boolean mForceChecked;
 
-        protected ChoiceLayout(Context context) {
+        protected AbstractChoiceView(Context context) {
             super(context);
-            mHolderViews = new SparseArray<>();
         }
 
-        /**
-         * 设置item的布局及Checkable控件的id。
-         *
-         * @param layoutId 布局id
-         * @param choiceId Checkable控件id
-         */
-        protected void setLayoutAndChoiceId(int layoutId, int... choiceId) {
-            View.inflate(getContext(), layoutId, this);
+        public void setContentView(View view) {
+            removeAllViews();
+            addView(view);
+        }
+
+        public void setChoiceId(int... choiceId) {
             mCheckViews = new Checkable[choiceId.length];
             for (int i = 0; i < choiceId.length; i++) {
-                View checkedView = findViewById(choiceId[i]);
-                checkedView.setFocusable(false);
-                checkedView.setFocusableInTouchMode(false);
-                checkedView.setClickable(false);
-                mHolderViews.put(choiceId[i], checkedView);
-                mCheckViews[i] = (Checkable) checkedView;
+                mCheckViews[i] = (Checkable) findViewById(choiceId[i]);
             }
+        }
+
+        @Override
+        public void setChecked(boolean checked) {
+            for (Checkable checkable : mCheckViews) {
+                checkable.setChecked(checked);
+            }
+            mChecked = checked;
+        }
+
+        @Override
+        public boolean isChecked() {
+            return mChecked;
+        }
+
+        @Override
+        public void toggle() {
+            setChecked(!mChecked);
+        }
+    }
+
+    public static class DefaultChoiceView extends AbstractChoiceView {
+        private SparseArray<View> mHolderViews;
+
+        public DefaultChoiceView(Context context, View view) {
+            super(context);
+            setContentView(view);
+            mHolderViews = new SparseArray<>();
         }
 
         /**
@@ -147,58 +138,6 @@ public abstract class ChoiceListAdapter<T> extends BaseAdapter {
          */
         public <V> V get(int id) {
             return (V) mHolderViews.get(id);
-        }
-
-        public void setText(int id, int stringId) {
-            TextView textView = get(id);
-            textView.setText(stringId);
-        }
-
-        public void setText(int id, String text) {
-            TextView textView = get(id);
-            textView.setText(text);
-        }
-
-        public void setChecked(int id, boolean checked) {
-            Checkable checkable = get(id);
-            checkable.setChecked(checked);
-        }
-
-        @Override
-        public void setChecked(boolean checked) {
-            checked |= mForceChecked;
-            for (Checkable checkable : mCheckViews) {
-                checkable.setChecked(checked);
-            }
-            mChecked = checked;
-        }
-
-        @Override
-        public boolean isChecked() {
-            return mChecked;
-        }
-
-        /**
-         * 是否为强制选中状态。
-         *
-         * @return 如果是强制选中状态返回true，否则返回false。
-         */
-        public boolean isForceChecked() {
-            return mForceChecked;
-        }
-
-        /**
-         * 设置是否强制选中状态。
-         *
-         * @param forceChecked 是否强制选中状态。
-         */
-        public void setForceChecked(boolean forceChecked) {
-            mForceChecked = forceChecked;
-        }
-
-        @Override
-        public void toggle() {
-            setChecked(mForceChecked | !mChecked);
         }
     }
 }

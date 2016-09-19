@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.githang.android.snippet.adapter.ChoiceListAdapter;
+import com.githang.android.snippet.adapter.ItemCreator;
 import com.githang.android.snippet.demo.R;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.List;
  *
  * @author Geek_Soledad (msdx.android@qq.com)
  */
-public class ChoiceListActivity extends Activity {
+public class ChoiceListActivity extends Activity implements ItemCreator<String, ChoiceListAdapter.DefaultChoiceView> {
     private RadioGroup mChoiceMode;
     private View mChoiceAll;
     private View mReverseChoice;
@@ -40,19 +42,7 @@ public class ChoiceListActivity extends Activity {
         for (int i = 0; i < 5; i++) {
             data.add("test" + i);
         }
-        final ChoiceListAdapter adapter = new ChoiceListAdapter<String>(this, R.layout.item_single_choice,
-                data, R.id.checkedView) {
-            @Override
-            protected void holdView(ChoiceLayout view) {
-                view.hold(R.id.text);
-            }
-
-            @Override
-            protected void bindData(ChoiceLayout view, int position, String data) {
-                TextView text = view.get(R.id.text);
-                text.setText(data);
-            }
-        };
+        final ChoiceListAdapter<String, ChoiceListAdapter.DefaultChoiceView> adapter = new ChoiceListAdapter<>(data, this);
         mListView.setAdapter(adapter);
 
         mChoiceMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -91,5 +81,20 @@ public class ChoiceListActivity extends Activity {
         });
 
         mChoiceMode.check(R.id.single_choice);
+    }
+
+    @Override
+    public ChoiceListAdapter.DefaultChoiceView createHolder(int position, ViewGroup parent) {
+        View itemView = View.inflate(this, R.layout.item_single_choice, null);
+        ChoiceListAdapter.DefaultChoiceView holder = new ChoiceListAdapter.DefaultChoiceView(this, itemView);
+        holder.hold(R.id.text);
+        holder.setChoiceId(R.id.checkedView);
+        return holder;
+    }
+
+    @Override
+    public void bindData(int position, ChoiceListAdapter.DefaultChoiceView holder, String data) {
+        TextView text = holder.get(R.id.text);
+        text.setText(data);
     }
 }

@@ -18,18 +18,18 @@ import java.util.List;
 /**
  * 进行简单封装的列表适配器
  *
- * @author HaohangHuang msdx.android@qq.com
- * @version 0.6
+ * @author Geek_Soledad (msdx.android@qq.com)
+ * @version 0.6.3
  */
-public class BaseListAdapter<T> extends BaseAdapter {
+public class BaseListAdapter<T, H extends BaseListAdapter.AbstractItemHolder> extends BaseAdapter {
     private List<T> mData;
-    private ItemCreator<T> mItemCreator;
+    private ItemCreator<T, H> mItemCreator;
 
-    public BaseListAdapter(ItemCreator<T> creator) {
-        this(new ArrayList<T>(), creator);
+    public BaseListAdapter(ItemCreator<T, H > creator) {
+        this(null, creator);
     }
 
-    public BaseListAdapter(List<T> data, ItemCreator<T> creator) {
+    public BaseListAdapter(List<T> data, ItemCreator<T, H> creator) {
         mData = data;
         mItemCreator = creator;
     }
@@ -51,36 +51,39 @@ public class BaseListAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Holder holder;
+        final H holder;
         if (convertView == null) {
             holder = mItemCreator.createHolder(position, parent);
-            convertView = holder.getView();
+            convertView = holder.itemView;
         } else {
-            holder = (Holder) convertView.getTag();
+            holder = (H) convertView.getTag();
         }
         mItemCreator.bindData(position, holder, getItem(position));
         return convertView;
     }
 
-    public void update(List<T> data) {
-        mData.clear();
-        mData.addAll(data);
-        notifyDataSetChanged();
+    public void setData(List<T> data) {
+        mData = data;
     }
 
-    public static class Holder {
-        private SparseArray<View> mHolderViews;
-        private View mItem;
+    public void addData(List<T> data) {
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
+        mData.addAll(data);
+    }
 
-        public Holder(View view) {
+    public static class DefaultHolder extends AbstractItemHolder {
+        private SparseArray<View> mHolderViews;
+
+        public DefaultHolder(View view) {
+            super(view);
             mHolderViews = new SparseArray<>();
-            mItem = view;
-            mItem.setTag(this);
         }
 
         public void hold(int... resIds) {
             for (int id : resIds) {
-                mHolderViews.put(id, mItem.findViewById(id));
+                mHolderViews.put(id, itemView.findViewById(id));
             }
         }
 
@@ -97,22 +100,13 @@ public class BaseListAdapter<T> extends BaseAdapter {
             Checkable button = get(id);
             button.setChecked(checked);
         }
-
-        public View getView() {
-            return mItem;
-        }
     }
+    public static abstract class AbstractItemHolder implements ItemHolder {
+        public View itemView;
 
-    public interface ItemCreator<T> {
-
-        Holder createHolder(int position, ViewGroup parent);
-
-        /**
-         * 设置列表里的视图内容
-         *
-         * @param position 在列表中的位置
-         * @param holder   该位置对应的视图
-         */
-        void bindData(int position, Holder holder, T data);
+        public AbstractItemHolder(View itemView) {
+            this.itemView = itemView;
+            itemView.setTag(this);
+        }
     }
 }
