@@ -22,21 +22,21 @@ import java.util.List;
  * @version 0.6.3
  */
 public class BaseListAdapter<T, H extends BaseListAdapter.AbstractItemHolder> extends BaseAdapter {
-    private List<T> mData;
-    private ItemCreator<T, H> mItemCreator;
+    private final List<T> mData;
+    private final ItemCreator<T, H> mItemCreator;
 
     public BaseListAdapter(ItemCreator<T, H > creator) {
-        this(null, creator);
+        this(new ArrayList<T>(), creator);
     }
 
     public BaseListAdapter(List<T> data, ItemCreator<T, H> creator) {
-        mData = data;
+        mData = data == null ? new ArrayList<T>() : data;
         mItemCreator = creator;
     }
 
     @Override
     public int getCount() {
-        return mData == null ? 0 : mData.size();
+        return mData.size();
     }
 
     @Override
@@ -62,15 +62,16 @@ public class BaseListAdapter<T, H extends BaseListAdapter.AbstractItemHolder> ex
         return convertView;
     }
 
-    public void setData(List<T> data) {
-        mData = data;
+    public void update(List<T> data) {
+        mData.clear();
+        addData(data);
     }
 
     public void addData(List<T> data) {
-        if (mData == null) {
-            mData = new ArrayList<>();
+        if (data != null) {
+            mData.addAll(data);
         }
-        mData.addAll(data);
+        notifyDataSetChanged();
     }
 
     public static class DefaultHolder extends AbstractItemHolder {
@@ -101,6 +102,7 @@ public class BaseListAdapter<T, H extends BaseListAdapter.AbstractItemHolder> ex
             button.setChecked(checked);
         }
     }
+
     public static abstract class AbstractItemHolder implements ItemHolder {
         public View itemView;
 
