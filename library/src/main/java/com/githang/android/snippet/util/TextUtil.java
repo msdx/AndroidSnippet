@@ -9,17 +9,25 @@ package com.githang.android.snippet.util;
  */
 public class TextUtil {
     /**
-     * 字符串拼接。
+     * 非空字符串拼接。
      *
-     * @param texts 待拼接的字符串。如果字符串为null或""则会被跳过，不进行拼接。
+     * @param delimiter 拼接的字符
+     * @param texts     待拼接的字符串。如果字符串为null或""则会被跳过，不进行拼接。
      * @return 返回拼接后的结果。
+     * @since 0.6.3
      */
-    public static String concat(String... texts) {
+    public static String concatNonEmpty(String delimiter, String... texts) {
         StringBuilder sb = new StringBuilder();
         final int size = texts.length;
+        boolean firstTime = true;
         for (int i = 0; i < size; i++) {
             String text = texts[i];
             if (text != null && text.length() != 0) {
+                if (firstTime) {
+                    firstTime = false;
+                } else {
+                    sb.append(delimiter);
+                }
                 sb.append(text);
             }
         }
