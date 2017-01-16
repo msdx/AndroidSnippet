@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Stack;
 
 /**
@@ -24,7 +22,6 @@ import java.util.Stack;
 public class AppManager {
     private static final String LOG_TAG = AppManager.class.getSimpleName();
     private static Stack<Activity> activityStack = new Stack<Activity>();
-    private static LinkedHashMap<Activity, Class<? extends Activity>> stepMap = new LinkedHashMap<>(10, 0.8f, true);
     private static boolean autoManage = false;
 
     /**
@@ -86,7 +83,6 @@ public class AppManager {
      */
     public static void add(Activity activity) {
         activityStack.push(activity);
-        stepMap.put(activity, activity.getClass());
     }
 
     /**
@@ -96,7 +92,6 @@ public class AppManager {
      */
     public static void remove(Activity activity) {
         activityStack.remove(activity);
-        stepMap.remove(activity);
     }
 
     /**
@@ -107,36 +102,6 @@ public class AppManager {
     }
 
     /**
-     * 是否包含指定类型的Activity
-     *
-     * @param cls 指定的Activity类型
-     * @return 包含返回true, 否则返回false
-     */
-    public static boolean contains(Class<? extends Activity> cls) {
-        return stepMap.values().contains(cls);
-    }
-
-    public static boolean containSteps(Class<? extends Activity>... part) {
-        ArrayList<Class<? extends Activity>> steps = new ArrayList<>(stepMap.values());
-        int subCount = part.length;
-        int count = steps.size();
-        if (subCount > count) {
-            return false;
-        }
-        int end = count - subCount;
-        outLoop:
-        for (int start = 0; start <= end; start++) {
-            for (int index = 0; index < subCount; index++) {
-                if (steps.get(index + start) != (part[index])) {
-                    continue outLoop;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * 结束当前Activity（堆栈中最后一个压入的）
      */
     public static void finishCurrentActivity() {
@@ -144,7 +109,6 @@ public class AppManager {
         if (activity != null) {
             activity.finish();
         }
-        stepMap.remove(activity);
     }
 
     /**
@@ -183,13 +147,12 @@ public class AppManager {
             }
         }
         activityStack.clear();
-        stepMap.clear();
     }
 
     /**
      * 退出应用程序
      */
-    public static void AppExit(Context context) {
+    public static void exitApp(Context context) {
         try {
             finishAllActivity();
             ActivityManager manager = (ActivityManager) context
@@ -201,19 +164,15 @@ public class AppManager {
         }
     }
 
-    /**
-     * 启动界面
-     *
-     * @param context Context对象
-     * @param clazz   Activity的Class对象
-     * @param flag    Intent标志
-     */
-    public static void start(Context context, Class<? extends Activity> clazz, int flag) {
-        Intent intent = new Intent(context, clazz);
-        intent.addFlags(flag);
-        context.startActivity(intent);
+    public static void finishWithout(Activity exclude) {
+        for (Activity activity : activityStack) {
+            if (activity != null && activity != exclude) {
+                activity.finish();
+            }
+        }
+        activityStack.clear();
+        activityStack.add(exclude);
     }
-
     /**
      * 返回启动着的Activity的大小
      *
