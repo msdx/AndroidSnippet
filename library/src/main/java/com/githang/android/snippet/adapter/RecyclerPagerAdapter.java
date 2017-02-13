@@ -38,6 +38,11 @@ public class RecyclerPagerAdapter<T, H extends ItemHolder.AbstractItemHolder> ex
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+    @Override
     public Object instantiateItem(ViewGroup container, int position) {
         final T data = mData.get(position);
         final View view;
