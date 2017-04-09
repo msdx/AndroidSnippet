@@ -29,7 +29,7 @@ public class FlingViewPager extends ViewPager {
                 return true;
             }
 
-            moveToNearItem(velocityX > 0);
+            moveToNearItem(velocityX < 0);
             return true;
         }
 
@@ -65,9 +65,9 @@ public class FlingViewPager extends ViewPager {
 
     private void moveToNearItem(boolean next) {
         if (next) {
-            setCurrentItem(getCurrentItem() - 1, true);
-        } else {
             setCurrentItem(getCurrentItem() + 1, true);
+        } else {
+            setCurrentItem(getCurrentItem() - 1, true);
         }
     }
 }
