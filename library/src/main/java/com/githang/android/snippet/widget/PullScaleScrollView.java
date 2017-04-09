@@ -23,7 +23,7 @@ import android.widget.ScrollView;
  * 下拉放大头部的ScrollView。基于markmjw的开源项目https://github.com/MarkMjw/PullScrollView 修改而来。
  *
  * @author Huang Haohang (msdx.andorid@qq.com)
- * @date 2013-09-13
+ * @since 2013-09-13
  */
 public class PullScaleScrollView extends ScrollView {
     private static final String TAG = "PullScaleScrollView";

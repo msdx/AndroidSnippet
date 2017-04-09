@@ -69,9 +69,6 @@ public class StartIntent extends Intent {
         super.writeToParcel(dest, parcelableFlags);
     }
 
-    /**
-     * @hide
-     */
     protected StartIntent(Parcel in) {
         readFromParcel(in);
     }
