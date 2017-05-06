@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PaddingWeightLinearLayout">
+        <attr name="ppLeftPadding" format="integer"/>
+        <attr name="ppRightPadding" format="integer"/>
+        <attr name="ppTopPadding" format="integer"/>
+        <attr name="ppBottomPadding" format="integer"/>
+    </declare-styleable>
+</resources>
