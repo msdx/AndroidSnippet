@@ -15,7 +15,7 @@ import java.util.Stack;
 /**
  * 用于列表条目的快速Adapter,复用View
  *
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author msdx.android@qq.com (huanghaohang@parkingwang.com)
  * @version 4.0 2016-01-25
  * @since 4.0 2016-01-25
  */

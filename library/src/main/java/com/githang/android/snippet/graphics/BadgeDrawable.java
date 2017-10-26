@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 import android.view.Gravity;
 
 /**
- * @author 黄浩杭 (huanghaohang@parkingwang.com)
+ * @author msdx.android (huanghaohang@parkingwang.com)
  * @since 2016-12-26
  */
 public class BadgeDrawable extends Drawable {
