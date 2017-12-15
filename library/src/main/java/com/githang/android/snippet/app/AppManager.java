@@ -2,9 +2,7 @@ package com.githang.android.snippet.app;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +14,10 @@ import java.util.Stack;
  * 应用程序Activity管理类：用于Activity管理和应用程序退出
  *
  * @author HaohangHuang (msdx.android@qq.com)
- * @version 0.4
+ * @version 0.6.4
  * @since 0.1
  */
 public class AppManager {
-    private static final String LOG_TAG = AppManager.class.getSimpleName();
     private static Stack<Activity> activityStack = new Stack<Activity>();
     private static boolean autoManage = false;
 
@@ -106,7 +103,7 @@ public class AppManager {
      */
     public static void finishCurrentActivity() {
         Activity activity = activityStack.pop();
-        if (activity != null) {
+        if (activity != null && !activity.isFinishing()) {
             activity.finish();
         }
     }
@@ -147,21 +144,6 @@ public class AppManager {
             }
         }
         activityStack.clear();
-    }
-
-    /**
-     * 退出应用程序
-     */
-    public static void exitApp(Context context) {
-        try {
-            finishAllActivity();
-            ActivityManager manager = (ActivityManager) context
-                    .getSystemService(Context.ACTIVITY_SERVICE);
-            manager.killBackgroundProcesses(context.getPackageName());
-            System.exit(0);
-        } catch (Exception e) {
-            Log.w(LOG_TAG, e);
-        }
     }
 
     public static void finishWithout(Activity exclude) {
