@@ -21,15 +21,21 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+task syncJavadoc(type: Sync, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    into rootProject.file('docs')
+}
+
 javadoc {
     options {
         encoding "UTF-8"
         charSet 'UTF-8'
         author true
         version true
-        links "http://docs.oracle.com/javase/7/docs/api/"
-        links "http://androiddoc.qiniudn.com/reference/"
         title "$PROJ_NAME $PROJ_VERSION"
+        links "http://docs.oracle.com/javase/7/docs/api/"
+        String packageListRef = "${android.sdkDirectory}/docs/reference/"
+        linksOffline 'http://d.android.com/reference/', packageListRef
     }
 }
 
@@ -44,7 +50,7 @@ install {
             name PROJ_NAME
             description PROJ_DESCRIPTION
             url PROJ_WEBSITEURL
-            inceptionYear '2016'
+            inceptionYear new Date().year.toString()
 
             packaging 'aar'
             groupId PROJ_GROUP
