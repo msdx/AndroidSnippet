@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
  * Intent 工具类。
  *
  * @author msdx.android@qq.com
- * @version 2017-12-15 0.6.4
+ * @version 2017-12-15 0.6.5
  * @since 2015-06-18
  */
 public class Intents {
@@ -24,6 +24,18 @@ public class Intents {
     public static Intent call(String phoneNumber) {
         final Uri uri = Uri.parse("tel:" + phoneNumber);
         return new Intent(Intent.ACTION_DIAL, uri);
+    }
+
+    /**
+     * 跳转到指定网页的 Intent
+     *
+     * @param url 网页地址
+     * @return 跳转的 Intent
+     * @since 0.6.5
+     */
+    public static Intent website(String url) {
+        return new Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse(url));
     }
 
     /**
