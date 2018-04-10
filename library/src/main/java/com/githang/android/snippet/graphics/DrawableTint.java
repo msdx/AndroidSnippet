@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.graphics.drawable.TintAwareDrawable;
 
@@ -12,6 +13,14 @@ import android.support.v4.graphics.drawable.TintAwareDrawable;
  * @since 0.6.4
  */
 public class DrawableTint {
+
+    public static Drawable tint(Drawable drawable, @ColorInt int tint) {
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableTint.setTintMode(drawable, PorterDuff.Mode.MULTIPLY);
+        drawable = drawable.mutate();
+        DrawableCompat.setTint(drawable, tint);
+        return drawable;
+    }
 
     /**
      * 对指定 Drawable 进行着色
