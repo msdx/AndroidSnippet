@@ -30,7 +30,7 @@ public abstract class AbstractViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = mViews.get(position);
         if (view == null) {
-            view = newView(position);
+            view = newView(position, container);
             mViews.put(position, view);
         }
         container.addView(view);
@@ -41,9 +41,10 @@ public abstract class AbstractViewPagerAdapter extends PagerAdapter {
      * 创建一个新视图.
      *
      * @param position Pager中的位置.
+     * @param container Optional view to be the parent of the generated view.
      * @return View
      */
-    public abstract View newView(int position);
+    public abstract View newView(int position, ViewGroup container);
 
     /**
      * 通知将更新指定位置的view.
